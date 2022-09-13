@@ -14,8 +14,6 @@ import "@pankod/refine-antd/dist/styles.min.css";
 
 import { PostList, PostCreate, PostEdit } from "pages/posts";
 import { UsersList } from "pages/users";
-import { CategoryList, CategoryCreate, CategoryEdit } from "pages/categories";
-
 import { TOKEN_KEY, API_URL } from "./constants";
 
 const App: React.FC = () => {
@@ -84,16 +82,10 @@ const App: React.FC = () => {
             routerProvider={routerProvider}
             resources={[
                 {
-                    name: "posts",
+                    name: "tenants",
                     list: PostList,
                     create: PostCreate,
                     edit: PostEdit,
-                },
-                {
-                    name: "categories",
-                    list: CategoryList,
-                    create: CategoryCreate,
-                    edit: CategoryEdit,
                 },
                 {
                     name: "users",

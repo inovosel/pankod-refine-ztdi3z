@@ -5,21 +5,15 @@ import {
     Create,
     Form,
     Input,
-    Select,
     useForm,
     useSelect,
-    Upload,
-    Radio,
 } from "@pankod/refine-antd";
 
-import ReactMarkdown from "react-markdown";
-import ReactMde from "react-mde";
 import "react-mde/lib/styles/css/react-mde-all.css";
 
 import {
     useStrapiUpload,
     mediaUploadMapper,
-    getValueProps,
 } from "@pankod/refine-strapi-v4";
 
 import { TOKEN_KEY } from "../../constants";
@@ -33,11 +27,6 @@ export const PostCreate: React.FC<IResourceComponentsProps> = () => {
         useState<"write" | "preview">("write");
 
     const { formProps, saveButtonProps } = useForm<IPost>();
-
-    const { selectProps } = useSelect({
-        resource: "categories",
-        metaData: { locale },
-    });
 
     const { ...uploadProps } = useStrapiUpload({
         maxCount: 1,
@@ -55,15 +44,10 @@ export const PostCreate: React.FC<IResourceComponentsProps> = () => {
                     );
                 }}
             >
-                <Form.Item label="Locale" name="locale">
-                    <Radio.Group onChange={(e) => setLocale(e.target.value)}>
-                        <Radio.Button value="en">English</Radio.Button>
-                        <Radio.Button value="de">Deutsch</Radio.Button>
-                    </Radio.Group>
-                </Form.Item>
                 <Form.Item
-                    label="Title"
-                    name="title"
+                    wrapperCol={{ span: 14 }}
+                    label="Name"
+                    name="name"
                     rules={[
                         {
                             required: true,
@@ -73,59 +57,40 @@ export const PostCreate: React.FC<IResourceComponentsProps> = () => {
                     <Input />
                 </Form.Item>
                 <Form.Item
-                    label="Category"
-                    name="category"
+                    wrapperCol={{ span: 6 }}
+                    label="Floor"
+                    name="floor"
                     rules={[
                         {
                             required: true,
                         },
                     ]}
                 >
-                    <Select {...selectProps} />
+                    <Input />
                 </Form.Item>
                 <Form.Item
-                    label="Content"
-                    name="content"
+                    wrapperCol={{ span: 6 }}
+                    label="Office"
+                    name="office"
                     rules={[
                         {
-                            required: true,
+                            required: false,
                         },
                     ]}
                 >
-                    <ReactMde
-                        selectedTab={selectedTab}
-                        onTabChange={setSelectedTab}
-                        generateMarkdownPreview={(markdown) =>
-                            Promise.resolve(
-                                <ReactMarkdown>{markdown}</ReactMarkdown>,
-                            )
-                        }
-                    />
+                    <Input />
                 </Form.Item>
-                <Form.Item label="Cover">
-                    <Form.Item
-                        name="cover"
-                        valuePropName="fileList"
-                        getValueProps={(data) => getValueProps(data, API_URL)}
-                        noStyle
-                    >
-                        <Upload.Dragger
-                            name="files"
-                            action={`${API_URL}/upload`}
-                            headers={{
-                                Authorization: `Bearer ${localStorage.getItem(
-                                    TOKEN_KEY,
-                                )}`,
-                            }}
-                            listType="picture"
-                            multiple
-                            {...uploadProps}
-                        >
-                            <p className="ant-upload-text">
-                                Drag & drop a file in this area
-                            </p>
-                        </Upload.Dragger>
-                    </Form.Item>
+                <Form.Item
+                    wrapperCol={{ span: 6 }}
+                    label="Doorbell"
+                    name="doorbell"
+                    rules={[
+                        {
+                            required: false,
+                        },
+                    ]}
+                >
+                    <Input />
                 </Form.Item>
             </Form>
         </Create>
